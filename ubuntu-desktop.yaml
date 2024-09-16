@@ -36,3 +36,4 @@ runcmd:
   - apt install -y konsole
   - apt remove -y vim
   - apt autoremove
+  - loadkeys pt

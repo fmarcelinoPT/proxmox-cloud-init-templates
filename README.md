@@ -116,6 +116,7 @@ runcmd:
   - apt install -y qemu-guest-agent
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
+  - loadkeys pt
 EOF
 ```
 
@@ -159,6 +160,7 @@ runcmd:
   - apt install -y konsole
   - apt remove -y vim
   - apt autoremove
+  - loadkeys pt
 EOF
 ```
 
@@ -220,3 +222,8 @@ chmod 400 ./support_rsa
 qm stop 1000 && qm unlock 1000 && qm destroy 1000 -destroy-unreferenced-disks 1 -purge 1
 qm stop 1001 && qm unlock 1001 && qm destroy 1001 -destroy-unreferenced-disks 1 -purge 1
 ```
+
+<!--
+donutuse
+password
+-->

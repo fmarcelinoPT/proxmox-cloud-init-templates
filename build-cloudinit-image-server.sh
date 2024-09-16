@@ -5,7 +5,7 @@ VMID=1000 # ID for the new VM
 VMNAME="ubuntu-server-24-04" # Name of the VM
 VENDOR_DATA_PATH="local:snippets/ubuntu-server.yaml" # Path to your vendor.yaml file
 # Default values
-USERNAME="ubuntu" # Replace with the desired username
+USERNAME="donutuse" # Replace with the desired username
 PASSWORD="password" # Replace with the desired password (hashed if possible for security)
 IMG_PATH="/tmp/noble-server-cloudimg-amd64.img" # Path to the downloaded image
 STORAGE="local-lvm" # Storage location for VM disk
