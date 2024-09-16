@@ -203,8 +203,15 @@ sh create-vm-cloned-desktop.sh
 
 ## Desktop tweaks
 
+Change theme on target Ubuntu Desktop: `lookandfeeltool -a org.kde.breezedark.desktop`
+
+## SSH fixes
+
+Need to set right permissions to ssh key:
+
 ```bash
-lookandfeeltool -a org.kde.breezedark.desktop
+chmod 400 ./onemarc_rsa
+chmod 400 ./support_rsa
 ```
 
 ## Cleanup
