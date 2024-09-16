@@ -212,8 +212,14 @@ Change theme on target Ubuntu Desktop: `lookandfeeltool -a org.kde.breezedark.de
 Need to set right permissions to ssh key:
 
 ```bash
+cp ./onemarc_rsa ~/.ssh/onemarc_rsa
+cp ./onemarc_rsa.pub ~/.ssh/onemarc_rsa.pub
+cp ./support_rsa ~/.ssh/support_rsa
+cp ./support_rsa.pub ~/.ssh/support_rsa.pub
 chmod 400 ./onemarc_rsa
+chmod 400 ./onemarc_rsa.pub
 chmod 400 ./support_rsa
+chmod 400 ./support_rsa.pub
 ```
 
 ## Cleanup
