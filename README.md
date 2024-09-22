@@ -20,6 +20,13 @@ These templates are configured with Cloud-Init to automatically set up the opera
 
 ## Usage
 
+Download the needed images:
+
+```bash
+wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+wget https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-x86_64-9-latest.x86_64.qcow2
+```
+
 To create a new template, run the appropriate script in a PVE node:
 
 - For Ubuntu Desktop:
@@ -38,10 +45,11 @@ These scripts will create a new virtual machine, configure it with Cloud-Init, a
 
 ## Configuration
 
-The scripts use two configuration files:
+The scripts use the following configuration files:
 
 - `ubuntu-desktop.yaml`
 - `ubuntu-server.yaml`
+- `centos-server.yaml`
 
 Which are used by Cloud-Init to customize the packages installed on the operating system. These files should be registered on the PVE and stored in the `local:snippets/` directory.
 
@@ -61,32 +69,9 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ## Preparation
 
-### Create ssh keys
+### SSH Keys
 
-```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/onemarc_rsa -C "onemarc_pub_key"
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/support_rsa -C "support_pub_key"
-```
-
-This will create 2 files: `onemarc_rsa` and `onemarc_rsa.pub`
-
-Connect using the `PRIVATE KEY`:
-
-```bash
-ssh -i ./onemarc_rsa ubuntu@192.168.8.111
-```
-
-Or add it to the host and connect without specifying the private key:
-
-```bash
-ssh-add ~/.ssh/onemarc_rsa
-```
-
-and ...
-
-```bash
-ssh ubuntu@192.168.8.111
-```
+Create the ssh keys according to [My Freakin Homelab > SSH-Keys]()
 
 ### Creating the vendor.yaml file for cloudinit
 
@@ -116,6 +101,7 @@ runcmd:
   - apt install -y qemu-guest-agent
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
+  - loadkeys pt
 EOF
 ```
 
@@ -159,10 +145,29 @@ runcmd:
   - apt install -y konsole
   - apt remove -y vim
   - apt autoremove
+  - loadkeys pt
 EOF
 ```
 
-This file serves two purposes: the first one is quite evident (installing `qemu-guest-agent`), while the second purpose may not be as obvious. Due to the sequencing of CloudInit, it initiates after networking, resulting in the inability to SSH or even ping the VM using the assigned name. However, this package is executed only once, so following the reboot, you will have full accessibility to the VM.
+```bash
+cat << EOF | tee /var/lib/vz/snippets/centos-server.yaml
+#cloud-config
+package_update: true
+
+package_upgrade: true
+
+locale: pt_PT
+
+runcmd:
+  - yum install -y vim git net-tools
+  - useradd ansiblebot
+  - echo "ansiblebot ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  - yum clean all
+  - rm -rf /var/cache/yum
+EOF
+```
+
+This files serves two purposes: the first one is quite evident (installing `qemu-guest-agent`), while the second purpose may not be as obvious. Due to the sequencing of CloudInit, it initiates after networking, resulting in the inability to SSH or even ping the VM using the assigned name. However, this package is executed only once, so following the reboot, you will have full accessibility to the VM.
 
 Before start creating the image, open datacenter → storage → select local → add snippets to contents list:
 
@@ -203,8 +208,21 @@ sh create-vm-cloned-desktop.sh
 
 ## Desktop tweaks
 
+Change theme on target Ubuntu Desktop: `lookandfeeltool -a org.kde.breezedark.desktop`
+
+## SSH fixes
+
+Need to set right permissions to ssh key:
+
 ```bash
-lookandfeeltool -a org.kde.breezedark.desktop
+cp ./onemarc_rsa ~/.ssh/onemarc_rsa
+cp ./onemarc_rsa.pub ~/.ssh/onemarc_rsa.pub
+cp ./support_rsa ~/.ssh/support_rsa
+cp ./support_rsa.pub ~/.ssh/support_rsa.pub
+chmod 400 ./onemarc_rsa
+chmod 400 ./onemarc_rsa.pub
+chmod 400 ./support_rsa
+chmod 400 ./support_rsa.pub
 ```
 
 ## Cleanup
@@ -213,3 +231,8 @@ lookandfeeltool -a org.kde.breezedark.desktop
 qm stop 1000 && qm unlock 1000 && qm destroy 1000 -destroy-unreferenced-disks 1 -purge 1
 qm stop 1001 && qm unlock 1001 && qm destroy 1001 -destroy-unreferenced-disks 1 -purge 1
 ```
+
+<!--
+donutuse
+password
+-->

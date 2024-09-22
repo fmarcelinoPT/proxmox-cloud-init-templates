@@ -1,0 +1,13 @@
+#cloud-config
+package_update: true
+
+package_upgrade: true
+
+locale: pt_PT
+
+runcmd:
+  - yum install -y vim git net-tools
+  - useradd ansiblebot
+  - echo "ansiblebot ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  - yum clean all
+  - rm -rf /var/cache/yum

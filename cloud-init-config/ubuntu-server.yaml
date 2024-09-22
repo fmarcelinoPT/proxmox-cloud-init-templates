@@ -22,3 +22,4 @@ runcmd:
   - apt install -y qemu-guest-agent
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
+  - loadkeys pt
