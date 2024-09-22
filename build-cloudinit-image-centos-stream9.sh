@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+# wget https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-x86_64-9-latest.x86_64.qcow2
 
 # Variables
-VMID=1000 # ID for the new VM
-VMNAME="ubuntu-server-24-04" # Name of the VM
-VENDOR_DATA_PATH="local:snippets/ubuntu-server.yaml" # Path to your vendor.yaml file
+VMID=1002 # ID for the new VM
+VMNAME="centos-stream-9" # Name of the VM
+VENDOR_DATA_PATH="local:snippets/centos-server.yaml" # Path to your vendor.yaml file
 # Default values
 USERNAME="donutuse" # Replace with the desired username
 PASSWORD="password" # Replace with the desired password (hashed if possible for security)
-IMG_PATH="/tmp/noble-server-cloudimg-amd64.img" # Path to the downloaded image
+IMG_PATH="/tmp/CentOS-Stream-GenericCloud-x86_64-9-latest.x86_64.qcow2" # Path to the downloaded image
 STORAGE="local-lvm" # Storage location for VM disk
 SSH_KEY_PATH="./onemarc_rsa.pub" # Path to the SSH public key file
 

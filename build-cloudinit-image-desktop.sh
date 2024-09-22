@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+
 # Variables
 VMID=1001 # ID for the new VM
 VMNAME="ubuntu-desktop-24-04" # Name of the VM
