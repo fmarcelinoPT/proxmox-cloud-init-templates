@@ -9,6 +9,7 @@ These templates are configured with Cloud-Init to automatically set up the opera
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
+- [Preparation](#preparation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -55,23 +56,11 @@ Which are used by Cloud-Init to customize the packages installed on the operatin
 
 The `ubuntu-desktop.yaml` file is used in the `build-cloudinit-image-desktop.sh` script to install the KDE Plasma Desktop environment.
 
-## Contributing
-
-Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-
-## Resources
-
-- Resources: <https://akashrajvanshi.medium.com/step-by-step-guide-creating-a-ready-to-use-ubuntu-cloud-image-on-proxmox-03d057f04fb2>
-
 ## Preparation
 
 ### SSH Keys
 
-Create the ssh keys according to [My Freakin Homelab > SSH-Keys]()
+Create the ssh keys according to [My Freakin Homelab > SSH-Keys](https://github.com/fmarcelinoPT/my-freakin-homelab/tree/main/ssh-keys#readme).
 
 ### Creating the vendor.yaml file for cloudinit
 
@@ -236,3 +225,19 @@ qm stop 1001 && qm unlock 1001 && qm destroy 1001 -destroy-unreferenced-disks 1 
 donutuse
 password
 -->
+
+## Contributing
+
+Contributions to this project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Author Information
+
+This role was created at 2024 by [fmarcelinoPT](https://github.com/fmarcelinoPT). Feel free to customize or extend the role to fit your needs.
+
+## Resources
+
+- Resources: <https://akashrajvanshi.medium.com/step-by-step-guide-creating-a-ready-to-use-ubuntu-cloud-image-on-proxmox-03d057f04fb2>
