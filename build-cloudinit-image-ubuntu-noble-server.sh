@@ -10,7 +10,7 @@ VENDOR_DATA_PATH="local:snippets/ubuntu-server.yaml" # Path to your vendor.yaml 
 USERNAME="donutuse" # Replace with the desired username
 PASSWORD="password" # Replace with the desired password (hashed if possible for security)
 IMG_PATH="/tmp/noble-server-cloudimg-amd64.img" # Path to the downloaded image
-STORAGE="local-lvm" # Storage location for VM disk
+STORAGE="cephpool01" # Storage location for VM disk
 SSH_KEY_PATH="./onemarc_rsa.pub" # Path to the SSH public key file
 
 # Remove old template

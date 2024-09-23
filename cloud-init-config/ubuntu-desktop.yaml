@@ -18,14 +18,16 @@ write_files:
       user-session=plasma
 
 runcmd:
-  - sudo useradd -m -s /bin/bash ansible
-  - echo "ansible:password" | chpasswd
-  - usermod -aG sudo ansible
-  - mkdir -p /home/ansible/.ssh
+  - useradd -m -d /home/ansiblebot -s /bin/bash ansiblebot
+  - echo "ansiblebot:password" | chpasswd
+  - mkdir /home/ansiblebot/.ssh
+  - touch /home/ansiblebot/.ssh/authorized_keys
+  - chown -R ansiblebot:ansiblebot /home/ansiblebot/.ssh
+  - chmod 700 /home/ansiblebot/.ssh
+  - chmod 600 /home/ansiblebot/.ssh/authorized_keys
+  - |
+    echo "ansiblebot ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/ansiblebot
   - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWDAlsCB5kRfoYW1jnd0/9kmZtalmN4cM8T5qJ8ualsMVTwo22ijKwieQG5yRpvgWAb87tBpoTtx+moKk7DIWezkyAAn5ptzHDeupyXith3otLtm8gy6uSvHJWrd3K24pnsjCuHAvlKmqtpC2IiPM0EoHsQLljiOPsSfJ4I8IBCrNMXOZI1tAzTIJB3GIsLk1D6E6/rwSWwqif87mQlqFV2dv3F0qpBN1ZPNldNCor2FD7RWmJsIGmGFadoIW/G/MXDlHnKqQQtPCytQNF2Q8JLf4eSytZRhcqrkOM3DmZ2hItM3JxbGB7NfUWS6gN9CzamE5Xumb2MxHQMqQrvJaKggsWTNecioDL1nm5FKfgbKMOoKpKkkw3ng0npay+rnpWcLceX3u9de49qEi68P6o/aF4MjdtXODFyT9lr6dmd51/7TYkmSlmIbcVsZi6rN9VvO7pOwy3tw4bPBj0IYX1OsDv1OTKPzKWPtTCY3Fa485vSRJP8y77OxlgzTSjhmskrWQNXd3rftjbuvWzg8uCVhh0edbo3TU5+z6dcMszkU1m7nPeyYp2pOcamKyXkOAgamfrqvOzPVun1OEwpc/5b7mSPufnGREj35RTWqYAFDpZ3BeUaHOKRwoUSsMNuoNPeaR723YZVhduaAUKZdnycHffduRWsp7S723AMWyaLw== support_pub_key" >> /home/ansible/.ssh/authorized_keys
-  - chown -R ansible:ansible /home/ansible/.ssh
-  - chmod 700 /home/ansible/.ssh
-  - chmod 600 /home/ansible/.ssh/authorized_keys
   - apt install -y qemu-guest-agent
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
